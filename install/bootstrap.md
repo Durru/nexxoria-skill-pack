@@ -2,28 +2,35 @@
 
 ## Purpose
 
-Define the initial package startup behavior for Nexxoria.
-
-## What bootstrap does in this iteration
-
-- confirms the package entrypoint is available
-- exposes the primary system entrypoint
-- signals that the base package is ready
+Define how Nexxoria becomes active in OpenCode after cloning by Git.
 
 ## Command
 
 ```bash
-npm run bootstrap
+./install.sh
 ```
 
-## Expected result
+## What the script does
 
-The command prints a short package status message and points the user to:
+1. resolves the current repository path
+2. creates `opencode.json` if it does not exist
+3. appends the Nexxoria Git plugin reference if missing
+4. leaves the repository ready for OpenCode discovery after restart
 
-- `SKILL.md`
-- `install/install.md`
-- `install/bootstrap.md`
+## Expected activation path
 
-## Why this is enough for now
+After bootstrap and OpenCode restart:
 
-This iteration focuses on building a clean, installable base package and a well-defined conversation module, without adding premature runtime complexity.
+- OpenCode loads `.opencode/plugins/nexxoria.js`
+- the plugin registers `skills/` as a discovered skills path
+- OpenCode can discover the `nexxoria` skill
+- bootstrap guidance is injected into the first user message of the session
+
+## Why this activation model
+
+This keeps Nexxoria:
+
+- portable by Git
+- simple to install
+- consistent with OpenCode plugin loading
+- ready to evolve without rebuilding the infrastructure

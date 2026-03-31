@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "description": "Single-package guided system for OpenCode/OpenCore projects using internal Nexxoria modules.",
-  "main": "opencode/plugin.js",
+  "main": ".opencode/plugins/nexxoria.js",
   "files": [
     "SKILL.md",
     "README.md",
-    "opencode",
+    ".opencode",
+    "skills",
     "modules",
     "adapted",
     "sources",
@@ -17,8 +18,8 @@
     "install"
   ],
   "scripts": {
-    "bootstrap": "node ./opencode/plugin.js",
-    "start": "node ./opencode/plugin.js"
+    "bootstrap": "bash ./install.sh",
+    "start": "node ./.opencode/plugins/nexxoria.js"
   },
   "keywords": [
     "nexxoria",

@@ -1,15 +1,44 @@
 # Nexxoria Skill Pack
 
-Nexxoria Skill Pack is a single-package foundation for installing a guided project system into OpenCode/OpenCore-style environments.
+Nexxoria Skill Pack is a Git-installable OpenCode package that activates a single Nexxoria system skill and routes work through internal modules.
 
 ## What this package provides
 
-- one installation entrypoint
-- one primary system skill
-- internal modular architecture
-- preserved upstream source skills for reference
-- an adapted conversation module as the first real system module
-- prepared placeholders for planning, tasks, memory, state, and context
+- one dominant OpenCode skill: `nexxoria`
+- one plugin-based activation path for Git installs
+- one conversation-first system entry
+- preserved upstream source skills for reference only
+- adapted Nexxoria-owned module documents
+- prepared MVP module contracts for future implementation
+
+## Activation model
+
+This repository is designed to be installed by Git and activated through OpenCode's plugin mechanism.
+
+### Primary entrypoints
+
+- human/canonical system definition: `SKILL.md`
+- OpenCode-discoverable skill: `skills/nexxoria/SKILL.md`
+- OpenCode plugin: `.opencode/plugins/nexxoria.js`
+
+## Quick install by Git
+
+Clone the repo:
+
+```bash
+git clone https://github.com/Durru/nexxoria-skill-pack.git
+cd nexxoria-skill-pack
+```
+
+Run bootstrap:
+
+```bash
+./install.sh
+```
+
+Restart OpenCode.
+
+Then verify that the skill is available and use `nexxoria` as the installed system skill.
 
 ## System goals
 
@@ -26,11 +55,12 @@ Nexxoria guides users through project work by helping them:
 
 Implemented in this iteration:
 
-- package infrastructure
-- installation scaffolding
+- Git-activable OpenCode plugin setup
+- canonical system definition
+- OpenCode-discoverable Nexxoria skill
 - source preservation for conversation logic
 - adapted conversation module
-- prepared internal module contracts for the remaining MVP modules
+- prepared internal module contracts for planning, tasks, memory, state, and context
 
 Not fully implemented yet:
 
@@ -46,34 +76,16 @@ Not fully implemented yet:
 nexxoria-skill-pack/
   README.md
   SKILL.md
-  package.json
-  opencode/
-    plugin.js
+  .opencode/plugins/nexxoria.js
+  skills/nexxoria/SKILL.md
+  install.sh
   modules/
   adapted/
   sources/
   templates/
   system/
   install/
-  tmp/
 ```
-
-## Installation
-
-See:
-
-- `install/install.md`
-- `install/bootstrap.md`
-
-## Single entrypoint
-
-The package is designed around a single primary entrypoint:
-
-- `SKILL.md` for the system behavior definition
-
-The package runtime entrypoint is:
-
-- `opencode/plugin.js`
 
 ## Conversation module
 
@@ -88,4 +100,4 @@ Original source skills are preserved under:
 - `sources/conversation/using-superpowers/`
 - `sources/conversation/brainstorming/`
 
-These are reference sources only, not the direct runtime of Nexxoria.
+These are source references only. Nexxoria runtime behavior belongs to Nexxoria-owned skills and module documents.

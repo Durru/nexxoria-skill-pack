@@ -2,43 +2,49 @@
 
 ## Goal
 
-Provide a single, simple installation experience for the Nexxoria Skill Pack.
+Provide a simple Git-based installation flow for OpenCode.
 
-## Current installation model
-
-This repository is structured as a single package with one primary system entrypoint.
-
-### Current local installation
+## Recommended installation
 
 1. Clone the repository:
 
 ```bash
-git clone <REPO_URL>
-```
-
-2. Enter the package directory:
-
-```bash
+git clone https://github.com/Durru/nexxoria-skill-pack.git
 cd nexxoria-skill-pack
 ```
 
-3. Run the bootstrap entry:
+2. Run the bootstrap script:
 
 ```bash
-npm run bootstrap
+./install.sh
 ```
 
-## Single entrypoint
+3. Restart OpenCode.
 
-- system entry: `SKILL.md`
-- runtime entry: `opencode/plugin.js`
+## What bootstrap does
 
-## Target future installation experience
+- ensures `~/.config/opencode/opencode.json` exists, unless `OPENCODE_CONFIG_DIR` is set
+- registers the local Git plugin entry for Nexxoria
+- prepares OpenCode to discover the `nexxoria` skill from this cloned repository
 
-The package is intentionally shaped so it can later be published and invoked with a single command such as:
+## Plugin registration model
 
-```bash
-npx nexxoria-skill-pack
+The bootstrap adds this kind of plugin specification to `opencode.json`:
+
+```json
+{
+  "plugin": [
+    "nexxoria@git+/absolute/path/to/nexxoria-skill-pack"
+  ]
+}
 ```
 
-That npm publication step is not part of this iteration.
+## Dominant entrypoints
+
+- canonical system definition: `SKILL.md`
+- OpenCode skill entry: `skills/nexxoria/SKILL.md`
+- OpenCode plugin entry: `.opencode/plugins/nexxoria.js`
+
+## Verification
+
+After restarting OpenCode, verify that the skill is discoverable and use the installed `nexxoria` skill as the primary system interface.
