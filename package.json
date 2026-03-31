@@ -1,0 +1,32 @@
+{
+  "name": "nexxoria-skill-pack",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Single-package guided system for OpenCode/OpenCore projects using internal Nexxoria modules.",
+  "main": "opencode/plugin.js",
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "opencode",
+    "modules",
+    "adapted",
+    "sources",
+    "templates",
+    "system",
+    "install"
+  ],
+  "scripts": {
+    "bootstrap": "node ./opencode/plugin.js",
+    "start": "node ./opencode/plugin.js"
+  },
+  "keywords": [
+    "nexxoria",
+    "skill-pack",
+    "opencode",
+    "opencore",
+    "conversation",
+    "project-guidance"
+  ],
+  "license": "MIT"
+}
