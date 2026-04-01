@@ -1,4 +1,4 @@
-import { Nexxoria } from '../../../sdk/src/index.js'
+import { Nexxoria } from '@nexxoria/sdk'
 
 export const runInitCommand = async (projectRoot: string): Promise<string> => {
   const sdk = new Nexxoria({ projectRoot })

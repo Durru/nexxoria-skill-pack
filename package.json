@@ -2,6 +2,7 @@
   "name": "nexxoria-skill-pack",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.0.0",
   "type": "module",
   "description": "Single-package guided system for OpenCode/OpenCore projects using internal Nexxoria modules.",
   "main": ".opencode/plugins/nexxoria.js",
@@ -21,7 +22,18 @@
   ],
   "scripts": {
     "bootstrap": "bash ./install.sh",
-    "start": "node ./.opencode/plugins/nexxoria.js"
+    "start": "node ./.opencode/plugins/nexxoria.js",
+    "install:workspace": "pnpm install",
+    "build": "pnpm -r build",
+    "build:sdk": "pnpm --filter @nexxoria/sdk build",
+    "build:cli": "pnpm --filter nexxoria build",
+    "build:plugin": "pnpm --filter @nexxoria/plugin-opencode build",
+    "cli:init": "pnpm --filter nexxoria exec nexxoria init",
+    "cli:status": "pnpm --filter nexxoria exec nexxoria status"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.6.3"
   },
   "keywords": [
     "nexxoria",

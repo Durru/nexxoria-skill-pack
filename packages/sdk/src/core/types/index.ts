@@ -12,6 +12,7 @@ export interface BootstrapResult {
 export interface HandlePromptResult {
   message: string
   status: 'needs_input' | 'bootstrapped' | 'ready'
+  intent: 'empty_input' | 'status' | 'continue' | 'organize_project' | 'clarify_request'
   bootstrap: BootstrapResult
   state: {
     current_stage: string | null

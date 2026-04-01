@@ -1,7 +1,7 @@
 import path from 'node:path'
 import os from 'node:os'
 import fs from 'node:fs'
-import { Nexxoria } from '../../sdk/src/index.js'
+import { Nexxoria } from '@nexxoria/sdk'
 import type { OpenCodeConfig, OpenCodeOutput } from './types.js'
 
 const normalizePath = (value: string | undefined, homeDir: string): string | null => {
@@ -11,20 +11,6 @@ const normalizePath = (value: string | undefined, homeDir: string): string | nul
   if (trimmed === '~') return homeDir
   if (trimmed.startsWith('~/')) return path.join(homeDir, trimmed.slice(2))
   return path.resolve(trimmed)
-}
-
-const formatSdkResult = (result: Awaited<ReturnType<Nexxoria['handlePrompt']>>): string => {
-  return [
-    '<NEXXORIA_SDK>',
-    `status: ${result.status}`,
-    `message: ${result.message}`,
-    `projectRoot: ${result.bootstrap.projectRoot}`,
-    `nexxoriaRoot: ${result.bootstrap.nexxoriaRoot}`,
-    `current_stage: ${result.state.current_stage ?? 'none'}`,
-    `next_step: ${result.state.next_step ?? 'none'}`,
-    `tasks: ${result.tasks.items.length}`,
-    '</NEXXORIA_SDK>',
-  ].join('\n')
 }
 
 export const createOpenCodeHandler = () => {
@@ -77,10 +63,17 @@ export const createOpenCodeHandler = () => {
 
       const sdk = new Nexxoria({ projectRoot: process.cwd() })
       const result = await sdk.handlePrompt(prompt)
-      const intro = formatSdkResult(result)
       const ref = firstUser.parts[0]
 
-      firstUser.parts.unshift({ ...ref, type: 'text', text: intro })
+      firstUser.parts.unshift({
+        ...ref,
+        type: 'text',
+        text: JSON.stringify({
+          message: result.message,
+          state: result.state,
+          tasks: result.tasks,
+        }, null, 2),
+      })
     },
   }
 }

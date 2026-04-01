@@ -1,3 +1,3 @@
-import { NexxoriaPlugin } from '../../packages/plugin-opencode/src/index.js'
+import { NexxoriaPlugin } from '../../packages/plugin-opencode/dist/index.js'
 
 export { NexxoriaPlugin }

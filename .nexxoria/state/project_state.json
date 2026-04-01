@@ -1,4 +1,15 @@
 {
+  "current_stage": "stage-1",
+  "progress": {
+    "totalStages": 3,
+    "completedStages": 0,
+    "totalTasks": 3,
+    "completedTasks": 0,
+    "currentStage": "stage-1",
+    "currentTask": "task-1"
+  },
+  "next_step": "define_task_scope",
+  "project_type": null,
   "currentStage": "stage-1",
   "currentTask": "task-1",
   "status": "active",
@@ -12,7 +23,11 @@
       "name": "Setup",
       "purpose": "Bootstrap the project and define the initial direction",
       "status": "in_progress",
-      "tasks": ["task-1", "task-2", "task-3"]
+      "tasks": [
+        "task-1",
+        "task-2",
+        "task-3"
+      ]
     },
     {
       "id": "stage-2",
@@ -51,13 +66,5 @@
       "status": "pending",
       "priority": "high"
     }
-  ],
-  "progress": {
-    "totalStages": 3,
-    "completedStages": 0,
-    "totalTasks": 3,
-    "completedTasks": 0,
-    "currentStage": "stage-1",
-    "currentTask": "task-1"
-  }
+  ]
 }

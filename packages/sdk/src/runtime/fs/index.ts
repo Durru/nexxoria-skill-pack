@@ -1,6 +1,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
+type VisibleEntry = {
+  name: string
+  type: 'dir' | 'file'
+}
+
 export const ensureDir = (directoryPath: string): void => {
   fs.mkdirSync(directoryPath, { recursive: true })
 }
@@ -30,8 +35,8 @@ export const writeTextFile = (filePath: string, content: string): void => {
 export const listVisibleEntries = (
   directoryPath: string,
   excludedNames: string[] = []
-): Array<{ name: string; type: 'dir' | 'file' }> => {
+): VisibleEntry[] => {
   return fs.readdirSync(directoryPath, { withFileTypes: true })
-    .filter((entry) => !excludedNames.includes(entry.name))
-    .map((entry) => ({ name: entry.name, type: entry.isDirectory() ? 'dir' : 'file' }))
+    .filter((entry: fs.Dirent) => !excludedNames.includes(entry.name))
+    .map((entry: fs.Dirent) => ({ name: entry.name, type: entry.isDirectory() ? 'dir' : 'file' }))
 }

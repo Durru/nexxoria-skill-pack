@@ -3,6 +3,7 @@
 import { runInitCommand } from './commands/init.js'
 import { runContinueCommand } from './commands/continue.js'
 import { runPromptCommand } from './commands/prompt.js'
+import { runStatusCommand } from './commands/status.js'
 
 const [, , command, ...args] = process.argv
 
@@ -11,6 +12,7 @@ const printUsage = (): void => {
     'Usage:',
     '  nexxoria init',
     '  nexxoria continue',
+    '  nexxoria status',
     '  nexxoria prompt "your prompt"',
   ].join('\n'))
 }
@@ -26,6 +28,11 @@ const main = async (): Promise<void> => {
 
     case 'continue': {
       console.log(await runContinueCommand(projectRoot))
+      return
+    }
+
+    case 'status': {
+      console.log(await runStatusCommand(projectRoot))
       return
     }
 

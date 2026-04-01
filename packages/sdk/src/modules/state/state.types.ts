@@ -1,3 +1,5 @@
+import { MemoryEventSet } from '../memory/index.js'
+
 /**
  * Reserved project classification field.
  *
@@ -45,4 +47,3 @@ export interface StateDerivationResult {
   state: ProjectState
   memoryEvents?: MemoryEventSet
 }
-import { MemoryEventSet } from '../memory/index.js'

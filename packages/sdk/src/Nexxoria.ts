@@ -59,6 +59,7 @@ export class Nexxoria {
       context,
       planning,
       tasks,
+      memory,
     })
 
     return {
