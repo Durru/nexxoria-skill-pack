@@ -2,9 +2,10 @@
 
 ## Purpose
 
-- inspect an existing repository when Nexxoria is installed into non-empty projects
-- detect useful structure and conventions before deeper planning
+- inspect an existing repository when Nexxoria enters a non-empty project
+- infer project type, visible structure, and architecture signals
+- produce useful onboarding memory without requiring a build
 
-## Current scope
+## Active runtime
 
-Prepared for later implementation. Not yet active in this iteration.
+The runtime helper lives at `runtime/repo-analysis.js` and uses lightweight heuristics from visible files and directories.

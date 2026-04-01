@@ -40,6 +40,18 @@ Expected result:
 - ambiguity reduced without overwhelming the user
 - better downstream decisions
 
+## Flow — Missing structure
+
+Prompt → Detect missing `.nexxoria/` → Bootstrap structure → Continue guidance
+
+## Flow — New project draft
+
+Prompt → Detect new project intent → Ask ordered questions → Create initial draft → Ask user to review and adjust
+
+## Flow — Underdefined request
+
+Prompt → Clarification questions → Options and recommendation → Draft generation → User review → Routing
+
 ## Flow 3 — Multiple valid paths
 
 Use when the user could reasonably continue in more than one direction.
@@ -69,6 +81,18 @@ Expected result:
 
 - continuity preserved
 - no silent confusion across modules
+
+## Flow — Re-entry
+
+Downstream ambiguity or change → Return to conversation → Clarify → Re-route
+
+## Flow — Existing repo continuation
+
+Prompt → Use onboarding summary → Present what Nexxoria already knows → Propose next step → Ask only unresolved questions
+
+## Flow — New project guided start
+
+Prompt → Use known prompt signal → Ask only missing essentials → Generate draft → Ask user to review and refine
 
 ## Flow 5 — Existing repository onboarding
 

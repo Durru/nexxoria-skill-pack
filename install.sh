@@ -2,9 +2,24 @@
 set -euo pipefail
 
 PACK_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGIN_SPEC="nexxoria@git+${PACK_ROOT}"
+REMOTE_REPO_URL="https://github.com/Durru/nexxoria-skill-pack.git"
+LOCAL_PLUGIN_URL="file://${PACK_ROOT}/.opencode/plugins/nexxoria.js"
+INSTALL_MODE="${1:-remote}"
 CONFIG_HOME="${OPENCODE_CONFIG_DIR:-$HOME/.config/opencode}"
 CONFIG_FILE="$CONFIG_HOME/opencode.json"
+
+case "$INSTALL_MODE" in
+  remote)
+    PLUGIN_SPEC="nexxoria@git+${REMOTE_REPO_URL}"
+    ;;
+  local)
+    PLUGIN_SPEC="$LOCAL_PLUGIN_URL"
+    ;;
+  *)
+    echo "Usage: ./install.sh [remote|local]"
+    exit 1
+    ;;
+esac
 
 mkdir -p "$CONFIG_HOME"
 
@@ -44,4 +59,7 @@ Next steps:
 1. Restart OpenCode.
 2. Use the skill tool to confirm the installed skill exists: nexxoria
 3. Start using the Nexxoria system in your project.
+
+Install mode:
+  $INSTALL_MODE
 EOF

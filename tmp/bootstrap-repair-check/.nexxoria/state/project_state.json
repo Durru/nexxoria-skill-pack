@@ -1,0 +1,9 @@
+{
+  "currentStage": "stage-1",
+  "currentTask": "task-1",
+  "status": "initialized",
+  "initializedBy": "nexxoria",
+  "draftConfirmed": false,
+  "stagesConfirmed": false,
+  "tasksConfirmed": false
+}

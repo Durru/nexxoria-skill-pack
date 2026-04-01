@@ -67,6 +67,44 @@ External skills are used as source logic only.
 
 They are preserved under `sources/` and adapted into Nexxoria-owned behavior under `adapted/` and `modules/`.
 
+## Automatic project bootstrap
+
+If `.nexxoria/` does not exist in the current project, the conversation module must bootstrap it automatically using Nexxoria templates before deeper routing continues.
+
+Bootstrap creates or repairs the broader `.nexxoria/` project structure. It is separate from conversation artifact persistence.
+
+Bootstrap scaffolding is not equivalent to confirmed structure. Confirmed structure is tracked in `.nexxoria/state/project_state.json` through `draftConfirmed`, `stagesConfirmed`, and `tasksConfirmed`.
+
+## Conversation runtime responsibilities
+
+Conversation must:
+
+- detect intention types such as new project, continuation, task work, doubt, and change
+- detect missing `.nexxoria/` structure
+- trigger bootstrap automatically
+- repair missing `.nexxoria/` parts automatically when the structure is incomplete
+- analyze existing repositories heuristically before deeper guidance
+- fill global memory with an initial summary, visible structure, architecture signals, inferred decisions, and pending questions
+- use onboarding analysis and global memory actively
+- avoid redundant questions
+- persist synthesized conversation context in `.nexxoria/context/conversation.md`
+- generate drafts automatically when enough context exists
+- persist the current draft artifact in `.nexxoria/context/draft.md` when available
+- summarize existing repositories before asking what remains unresolved
+- ask questions in guided order
+- produce a first draft for new projects
+- persist the current recommended next step in `.nexxoria/context/next-step.md`
+- routing is decided from persisted artifacts and current prompt context
+- use confirmation flags from `.nexxoria/state/project_state.json` when deciding whether routing can move from conversation to planning or tasks
+- the decision is persisted in `.nexxoria/context/routing.md`
+- conversation remains the control center even when another module becomes the next target
+- route to planning, tasks, memory, state, context, or errors
+- re-enter whenever guidance is needed again
+
+These persisted files are conversation artifacts inside `.nexxoria/context/`. They do not replace the wider bootstrap-created `.nexxoria/` structure.
+
+The runtime helper for project initialization lives at `runtime/bootstrap-project.js`.
+
 ## Active conversation references
 
 - `adapted/conversation/MODULE.md`

@@ -16,3 +16,15 @@ Construir un módulo de conversación que:
 - propone opciones
 - guía al usuario
 - decide el siguiente flujo del sistema
+
+## Absorbed logic
+
+### From using-superpowers
+- skill-first orchestration mindset
+- routing discipline
+- requirement to choose the right workflow before acting
+
+### From brainstorming
+- clarification through ordered questions
+- options with tradeoffs and recommendation
+- draft-first guidance for underdefined work

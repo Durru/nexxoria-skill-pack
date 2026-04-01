@@ -2,9 +2,8 @@
 
 ## Purpose
 
-- determine whether Nexxoria is entering a new or existing project
-- help select the right starting flow
+- determine whether the current directory is a new project, existing repo, initialized Nexxoria project, or incomplete Nexxoria project
 
-## Current scope
+## Active runtime
 
-Prepared for later implementation. The conversation module currently defines the conceptual entry behavior.
+The runtime helper lives at `runtime/project-detection.js` and checks `.nexxoria/` plus required structural paths.

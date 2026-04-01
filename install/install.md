@@ -19,6 +19,14 @@ cd nexxoria-skill-pack
 ./install.sh
 ```
 
+This registers the GitHub repository as the plugin source.
+
+For local development and debugging only:
+
+```bash
+./install.sh local
+```
+
 3. Restart OpenCode.
 
 ## What bootstrap does
@@ -34,7 +42,17 @@ The bootstrap adds this kind of plugin specification to `opencode.json`:
 ```json
 {
   "plugin": [
-    "nexxoria@git+/absolute/path/to/nexxoria-skill-pack"
+    "nexxoria@git+https://github.com/Durru/nexxoria-skill-pack.git"
+  ]
+}
+```
+
+For local development mode, it writes:
+
+```json
+{
+  "plugin": [
+    "file:///absolute/path/to/nexxoria-skill-pack/.opencode/plugins/nexxoria.js"
   ]
 }
 ```

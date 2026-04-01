@@ -1,0 +1,6 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "nexxoria@git+https://github.com/Durru/nexxoria-skill-pack.git"
+  ]
+}

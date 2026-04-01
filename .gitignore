@@ -1,3 +1,6 @@
 tmp/superpowers/
 .tmp-opencode-config/
 .tmp-opencode-config-verify/
+.debug-opencode/
+.debug-opencode-local/
+.debug-opencode-remote/

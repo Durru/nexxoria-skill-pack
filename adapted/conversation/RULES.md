@@ -13,6 +13,24 @@
 9. Conversation may re-enter whenever guidance is needed again.
 10. The module should preserve coherence across the whole system.
 
+## Bootstrap rules
+
+- If `.nexxoria/` is missing, bootstrap it before deeper project orchestration.
+- Bootstrap must not block guidance.
+- Bootstrap creates or repairs project structure; it is not the same thing as persisting conversation artifacts.
+
+## Confirmation rules
+
+- Bootstrap-created stage and task files are scaffolding, not proof of confirmation.
+- Use `.nexxoria/state/project_state.json` confirmation flags to decide whether routing can move from conversation to planning or tasks.
+- `draftConfirmed` gates routing from conversation toward planning.
+- `stagesConfirmed` gates routing from planning toward tasks.
+- `tasksConfirmed` reflects whether task structure is confirmed rather than merely scaffolded.
+
+## Intention detection rules
+
+- Distinguish at minimum: new project, continue project, create task, doubt, change.
+
 ## Intention rules
 
 - Treat the user request as intent first, not as implementation detail first.
@@ -26,6 +44,32 @@
 - Prefer one clear question at a time.
 - Ask about purpose, constraints, or success criteria before technical details when possible.
 - Do not ask for structure the system should infer itself.
+- Use workflow selection discipline before acting.
+- Prefer question-driven clarification before premature structure.
+- Use draft-first guidance for underdefined project requests.
+
+## New project question order
+
+When the user is starting a new project, ask in this order when needed:
+1. objective
+2. project name
+3. references or inspiration
+4. initial stages
+
+## Context usage rules
+
+- Do not ask for facts already inferred by onboarding or stored in global memory.
+- Prefer summarizing what Nexxoria already knows before asking follow-up questions.
+- Ask only the questions that remain unresolved.
+- If enough context exists, generate a draft before asking more.
+
+## Persistence rules
+
+- Persist conversation artifacts after onboarding-aware analysis and before later routing depends on them.
+- Persist synthesized conversation context in `.nexxoria/context/conversation.md`.
+- Persist the current draft in `.nexxoria/context/draft.md` when enough context exists to generate one.
+- Persist the current recommended next step in `.nexxoria/context/next-step.md`.
+- Treat these files as conversation artifacts, not as replacements for the broader bootstrap-created `.nexxoria/` structure.
 
 ## Option rules
 
@@ -35,6 +79,13 @@
 - Avoid false choice where the best path is obvious and low risk.
 
 ## Routing rules
+
+- If unresolved questions exist, stay in conversation.
+- If a draft exists but `draftConfirmed` is false, stay in conversation until the draft is confirmed.
+- If `draftConfirmed` is true and `stagesConfirmed` is false, route toward planning.
+- If `stagesConfirmed` is true and `tasksConfirmed` is false, route toward tasks.
+- If the user asks for progress, route toward state.
+- If the prompt is about decisions, errors, or architecture, route toward memory.
 
 Route to planning when:
 
