@@ -15,6 +15,7 @@ Known Facts
 - Type: node-project
 - project type inferred as node-project
 - package appears private
+- has packages directory
 - has package.json
 - has README.md
 

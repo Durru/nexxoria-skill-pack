@@ -1,0 +1,14 @@
+{
+  "name": "nexxoria",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "nexxoria": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}
