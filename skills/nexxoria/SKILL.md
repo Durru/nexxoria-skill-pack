@@ -75,7 +75,7 @@ Bootstrap creates or repairs the broader `.nexxoria/` project structure. It is s
 
 Bootstrap scaffolding is not equivalent to confirmed structure. Confirmed structure is tracked in `.nexxoria/state/project_state.json` through `draftConfirmed`, `stagesConfirmed`, and `tasksConfirmed`.
 
-## Conversation runtime responsibilities
+## Conversation module responsibilities
 
 Conversation must:
 
@@ -103,7 +103,9 @@ Conversation must:
 
 These persisted files are conversation artifacts inside `.nexxoria/context/`. They do not replace the wider bootstrap-created `.nexxoria/` structure.
 
-The runtime helper for project initialization lives at `runtime/bootstrap-project.js`.
+Conversation is implemented as executable module code in `modules/conversation/index.js`.
+
+Runtime helpers for project initialization and persistence live under `runtime/` and are limited to mechanical execution.
 
 ## Active conversation references
 
@@ -125,15 +127,15 @@ Completed now:
 - OpenCode plugin activation
 - preserved conversation source skills
 - adapted conversation module
-- prepared contracts for the remaining modules
+- executable conversation, planning, tasks, memory, state, and context modules
+- runtime helpers reduced to scaffold, snapshot, filesystem, and persistence work
 
-Not fully implemented yet:
+Architecture rule:
 
-- planning runtime
-- tasks runtime
-- memory runtime
-- state runtime
-- context runtime
+- modules decide
+- runtime executes
+
+See `docs/architecture-rules.md`.
 
 ## Goal
 

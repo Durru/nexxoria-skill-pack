@@ -2,8 +2,12 @@
 
 Intent
 
-- Initial bootstrap task
+- Review current project structure to understand what's already implemented
 
 Status
 
-- pending
+- in_progress
+
+Priority
+
+- high

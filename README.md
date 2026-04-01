@@ -9,7 +9,7 @@ Nexxoria Skill Pack is a Git-installable OpenCode package that activates a singl
 - one conversation-first system entry
 - preserved upstream source skills for reference only
 - adapted Nexxoria-owned module documents
-- prepared MVP module contracts for future implementation
+- executable internal modules that own product decisions
 
 ## Activation model
 
@@ -60,7 +60,7 @@ Nexxoria guides users through project work by helping them:
 - preserve decisions and context
 - continue work coherently over time
 
-## Current MVP scope
+## Current architecture scope
 
 Implemented in this iteration:
 
@@ -69,7 +69,8 @@ Implemented in this iteration:
 - OpenCode-discoverable Nexxoria skill
 - source preservation for conversation logic
 - adapted conversation module
-- prepared internal module contracts for planning, tasks, memory, state, and context
+- executable conversation, planning, tasks, memory, state, and context modules
+- runtime helpers reduced to filesystem, scaffold, repository snapshot, and persistence
 
 ## Managed project structure
 
@@ -101,13 +102,12 @@ Confirmed project structure is tracked in `.nexxoria/state/project_state.json` u
 
 Conversation and routing should use those confirmation flags when deciding whether the project should remain in conversation, move into planning, or move into tasks.
 
-Not fully implemented yet:
+Architecture rule:
 
-- planning runtime
-- tasks runtime
-- memory runtime
-- state runtime
-- context runtime
+- modules decide
+- runtime executes
+
+See `docs/architecture-rules.md` for the canonical rule.
 
 ## Repository structure
 
@@ -132,6 +132,8 @@ The conversation module is the center of the MVP.
 
 It always enters first, interprets intent, asks clarifying questions when needed, proposes options, guides the user, and decides when control should pass to another internal module.
 
+This is now implemented as executable code in `modules/conversation/index.js`.
+
 ## Source preservation
 
 Original source skills are preserved under:
@@ -153,11 +155,13 @@ It creates the `.nexxoria/` project structure with:
 - stage-1 task scaffolding
 - project state
 
+The runtime is intentionally mechanical. It must not interpret product intent or decide flow. Decision logic belongs to the modules.
+
 ## Automatic onboarding behavior
 
 For new projects, Nexxoria bootstraps `.nexxoria/`, initializes memory, and starts guided conversation.
 
-For existing repositories, Nexxoria creates or repairs `.nexxoria/`, analyzes the repository heuristically, writes initial global memory, and then asks only the questions that remain unresolved.
+For existing repositories, Nexxoria creates or repairs `.nexxoria/`, reads a repository snapshot, lets the conversation module interpret that snapshot, writes initial global memory, and then asks only the questions that remain unresolved.
 
 ## Persisted conversation artifacts
 
@@ -178,3 +182,5 @@ Nexxoria reads persisted conversation artifacts and routing signals to decide wh
 It persists the routing decision in:
 
 - `.nexxoria/context/routing.md`
+
+Routing is decided by `modules/conversation/index.js`, not by the runtime.

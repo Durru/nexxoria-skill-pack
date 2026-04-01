@@ -1,9 +1,63 @@
 {
   "currentStage": "stage-1",
   "currentTask": "task-1",
-  "status": "initialized",
+  "status": "active",
   "initializedBy": "nexxoria",
-  "draftConfirmed": false,
-  "stagesConfirmed": false,
-  "tasksConfirmed": false
+  "draftConfirmed": true,
+  "stagesConfirmed": true,
+  "tasksConfirmed": false,
+  "stages": [
+    {
+      "id": "stage-1",
+      "name": "Setup",
+      "purpose": "Bootstrap the project and define the initial direction",
+      "status": "in_progress",
+      "tasks": ["task-1", "task-2", "task-3"]
+    },
+    {
+      "id": "stage-2",
+      "name": "Planning",
+      "purpose": "Analyze the current project state and plan the next changes or features to implement",
+      "status": "pending",
+      "tasks": []
+    },
+    {
+      "id": "stage-3",
+      "name": "Implementation",
+      "purpose": "Execute planned changes safely with proper testing and verification",
+      "status": "pending",
+      "tasks": []
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-1",
+      "stage": "stage-1",
+      "intent": "Review current project structure",
+      "status": "in_progress",
+      "priority": "high"
+    },
+    {
+      "id": "task-2",
+      "stage": "stage-1",
+      "intent": "Define project direction and scope",
+      "status": "pending",
+      "priority": "high"
+    },
+    {
+      "id": "task-3",
+      "stage": "stage-1",
+      "intent": "Configure initial development environment",
+      "status": "pending",
+      "priority": "high"
+    }
+  ],
+  "progress": {
+    "totalStages": 3,
+    "completedStages": 0,
+    "totalTasks": 3,
+    "completedTasks": 0,
+    "currentStage": "stage-1",
+    "currentTask": "task-1"
+  }
 }

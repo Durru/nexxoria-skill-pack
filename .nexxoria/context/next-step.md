@@ -1,6 +1,6 @@
 # Next Step
 
-- summarize findings and propose how to continue
+- create the first confirmed tasks from the defined stages
 
 Questions Needed
 

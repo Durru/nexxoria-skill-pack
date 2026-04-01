@@ -2,20 +2,20 @@
 
 Target Module
 
-- state
+- tasks
 
 Reason
 
-- the user is asking about progress or current state
+- stages are confirmed but tasks are not confirmed yet
 
 Proposal
 
-- Summarize the current project state and identify what remains.
+- Create the first confirmed tasks from the defined stages.
 
 Next Step
 
-- summarize findings and propose how to continue
+- create the first confirmed tasks from the defined stages
 
 Needs Confirmation
 
-- No
+- Yes

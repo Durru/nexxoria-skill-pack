@@ -2,12 +2,17 @@ import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
 import { fileURLToPath } from 'node:url'
-import { onboardProject } from '../../runtime/onboarding.js'
-import { buildConversationContext, persistConversationContext } from '../../runtime/conversation-context.js'
-import { decideNextRoute, persistRoutingDecision } from '../../runtime/next-step-routing.js'
+import { runConversationModule } from '../../modules/conversation/index.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const onboardingCache = new Map()
+
+// Development mode flag - set via environment variable or .nexxoria-dev file
+const isDevMode = () => {
+  if (process.env.NEXXORIA_DEV === 'true') return true
+  if (process.env.NEXXORIA_DEV === 'false') return false
+  const devFlagPath = path.join(__dirname, '../../.nexxoria-dev')
+  return fs.existsSync(devFlagPath)
+}
 
 const normalizePath = (value, homeDir) => {
   if (!value || typeof value !== 'string') return null
@@ -37,6 +42,11 @@ export const NexxoriaPlugin = async () => {
 
   return {
     config: async (config) => {
+      // Development mode - skip skill registration
+      if (isDevMode()) {
+        return
+      }
+
       config.skills = config.skills || {}
       config.skills.paths = config.skills.paths || []
 
@@ -51,6 +61,11 @@ export const NexxoriaPlugin = async () => {
     },
 
     'experimental.chat.messages.transform': async (_input, output) => {
+      // Development mode - skip all activation
+      if (isDevMode()) {
+        return
+      }
+
       if (!bootstrap || !output.messages?.length) return
 
       const firstUser = output.messages.find((message) => message.info?.role === 'user')
@@ -63,43 +78,16 @@ export const NexxoriaPlugin = async () => {
       if (alreadyInjected) return
 
       const targetDirectory = process.cwd()
-      let onboarding = onboardingCache.get(targetDirectory)
-      if (!onboarding) {
-        onboarding = onboardProject(targetDirectory)
-        onboardingCache.set(targetDirectory, onboarding)
-      }
-
       const userPrompt = firstUser.parts
         .filter((part) => part.type === 'text')
         .map((part) => part.text)
         .join('\n')
 
-      const conversationContext = buildConversationContext({
+      const result = runConversationModule({
         projectRoot: targetDirectory,
-        onboarding,
         userPrompt,
       })
-
-      try {
-        persistConversationContext({
-          projectRoot: targetDirectory,
-          context: conversationContext,
-        })
-      } catch (error) {
-        console.warn('Nexxoria: failed to persist conversation context', error)
-      }
-
-      const route = decideNextRoute({
-        projectRoot: targetDirectory,
-        conversationContext,
-        userPrompt,
-      })
-
-      try {
-        persistRoutingDecision({ projectRoot: targetDirectory, route })
-      } catch (error) {
-        console.warn('Nexxoria: failed to persist routing decision', error)
-      }
+      const { scaffold, analysis, conversationContext, route } = result
 
       const intro = [
         '<NEXXORIA_BOOTSTRAP>',
@@ -110,10 +98,10 @@ export const NexxoriaPlugin = async () => {
         'Treat external source skills as reference logic only, not direct runtime behavior.',
         'Use internal modules for planning, tasks, memory, state, context, and errors.',
         'Use the Nexxoria system to guide intent, ask clarifying questions when required, and route work into internal modules.',
-        `Project initialized: ${onboarding.detection.hasNexxoria ? 'existing or repaired' : 'new bootstrap'}`,
-        `Project type: ${onboarding.analysis.projectType}`,
-        `Project summary: ${onboarding.analysis.summary || 'Not inferred yet'}`,
-        `Pending questions: ${onboarding.analysis.pendingQuestions.length ? onboarding.analysis.pendingQuestions.join(' | ') : 'None'}`,
+        `Project initialized: ${scaffold.detection.hasNexxoria ? 'existing or repaired' : 'new bootstrap'}`,
+        `Project type: ${analysis.projectType}`,
+        `Project summary: ${analysis.summary || 'Not inferred yet'}`,
+        `Pending questions: ${analysis.pendingQuestions.length ? analysis.pendingQuestions.join(' | ') : 'None'}`,
         `Conversation mode: ${conversationContext.mode}`,
         `Known facts: ${conversationContext.knownFacts.length ? conversationContext.knownFacts.join(' | ') : 'None yet'}`,
         `Suggested next step: ${conversationContext.suggestedNextStep}`,
