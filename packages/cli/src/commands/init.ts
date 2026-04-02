@@ -1,13 +1,13 @@
 import { Nexxoria } from '@nexxoria/sdk'
+import { renderHandlePromptResult } from './render.js'
 
 export const runInitCommand = async (projectRoot: string): Promise<string> => {
   const sdk = new Nexxoria({ projectRoot })
-  const result = sdk.bootstrapIfNeeded()
+  const bootstrap = sdk.bootstrapIfNeeded()
+  const followUpPrompt = bootstrap.created || bootstrap.repaired
+    ? 'quiero organizar este proyecto'
+    : 'status'
+  const result = await sdk.handlePrompt(followUpPrompt)
 
-  return [
-    'Nexxoria init',
-    `status: ${result.created ? 'bootstrapped' : result.repaired ? 'repaired' : 'ready'}`,
-    `projectRoot: ${result.projectRoot}`,
-    `nexxoriaRoot: ${result.nexxoriaRoot}`,
-  ].join('\n')
+  return renderHandlePromptResult(result)
 }
